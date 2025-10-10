@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SavePlate Connect - Professional Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h1>SavePlate Connect</h1>
+            <p>Smart Food Waste Reduction Platform</p>
+        </div>
+
+        <div class="card">
+            <div class="status-indicator">
+                <div class="status-step step-active">
+                    <div class="step-icon">1</div>
+                    <div class="step-text">Registration</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">2</div>
+                    <div class="step-text">Verification</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">3</div>
+                    <div class="step-text">Complete</div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h2>Create Your Account</h2>
+                <p>Join SavePlate Connect to reduce food waste in your household</p>
+            </div>
+
+            <form id="registrationForm" method="POST" action="register.php">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-container">
+                        <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="error-message" id="usernameError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Username is required and must be unique</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="error-message" id="emailError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Please enter a valid email address</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-container">
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="error-message" id="phoneError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Please enter a valid phone number</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar">
+                            <div class="strength-fill"></div>
+                        </div>
+                        <div class="strength-text">Password strength: <span id="strengthText">None</span></div>
+                    </div>
+                    <div class="error-message" id="passwordError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Password must be at least 8 characters with uppercase, lowercase, and numbers</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                        <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Passwords do not match</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="household_size">Household Size</label>
+                    <select id="household_size" name="household_size" required>
+                        <option value="">Select number of people in your household</option>
+                        <option value="1">1 person</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                        <option value="5">5+ people</option>
+                    </select>
+                    <div class="error-message" id="household_sizeError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Please select your household size</span>
+                    </div>
+                </div>
+
+                <div class="terms-section" id="termsSection">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="privacyToggle" name="privacyToggle">
+                        <label for="privacyToggle">
+                            <h3><i class="fas fa-chevron-right"></i> Privacy & Communication Preferences</h3>
+                        </label>
+                    </div>
+                    
+                    <div class="terms-content" id="termsContent">
+                        <div class="terms-note">
+                            <p>By creating an account with SavePlate Connect, you agree to the following privacy and communication settings:</p>
+                            
+                            <ul>
+                                <li><strong>Anonymous Data Collection:</strong> You allow SavePlate Connect to collect anonymous usage data to help us improve our services and develop better features for reducing food waste.</li>
+                                
+                                <li><strong>Email Notifications:</strong> You will receive important notifications about your account, food expiry alerts, donation updates, and meal planning suggestions via email.</li>
+                                
+                                <li><strong>Two-Factor Authentication (2FA):</strong> For enhanced security, we recommend enabling 2FA to protect your account from unauthorized access.</li>
+                                
+                                <li><strong>Personalized Ads:</strong> You consent to receiving personalized advertisements and recommendations based on your food preferences and usage patterns to help you discover relevant products and services.</li>
+                            </ul>
+                            
+                            <p>You can modify these preferences at any time in your account settings after registration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="registerBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+
+                <div class="login-link">
+                    Already have an account? <a href="signin.html">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+</html>

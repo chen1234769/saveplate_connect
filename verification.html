@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SavePlate Connect - Email Verification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="register.css">
+    <style>
+        .verification-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 32px;
+        }
+
+        .email-display {
+            background: #f8f9fa;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .otp-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin: 24px 0;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: var(--card);
+        }
+
+        .otp-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        .otp-input.filled {
+            border-color: var(--primary);
+            background: rgba(46, 125, 50, 0.05);
+        }
+
+        .timer-section {
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .timer {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #fff3e0;
+            border-radius: 50px;
+            color: var(--warning);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .timer.expired {
+            background: #ffebee;
+            color: var(--error);
+        }
+
+        .timer i {
+            font-size: 18px;
+        }
+
+        .resend-section {
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .resend-text {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .resend-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+
+        .resend-link.disabled {
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .back-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 576px) {
+            .otp-input {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h1>SavePlate Connect</h1>
+            <p>Smart Food Waste Reduction Platform</p>
+        </div>
+
+        <div class="card">
+            <div class="status-indicator">
+                <div class="status-step step-complete">
+                    <div class="step-icon"><i class="fas fa-check"></i></div>
+                    <div class="step-text">Registration</div>
+                </div>
+                <div class="status-step step-active">
+                    <div class="step-icon">2</div>
+                    <div class="step-text">Verification</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">3</div>
+                    <div class="step-text">Complete</div>
+                </div>
+            </div>
+
+            <div class="verification-icon">
+                <div class="icon-circle">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h2>Verify Your Email</h2>
+                <p>We've sent a 6-digit verification code to your email address. Please enter it below to complete your registration.</p>
+            </div>
+
+            <form id="verificationForm">
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <div class="email-display" id="userEmail">user@example.com</div>
+                </div>
+
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" data-index="0" autofocus>
+                    <input type="text" class="otp-input" maxlength="1" data-index="1">
+                    <input type="text" class="otp-input" maxlength="1" data-index="2">
+                    <input type="text" class="otp-input" maxlength="1" data-index="3">
+                    <input type="text" class="otp-input" maxlength="1" data-index="4">
+                    <input type="text" class="otp-input" maxlength="1" data-index="5">
+                </div>
+
+                <div class="timer-section">
+                    <div class="timer" id="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="timerText">Code expires in 05:00</span>
+                    </div>
+                </div>
+
+                <div class="resend-section">
+                    <div class="resend-text">Didn't receive the code?</div>
+                    <a href="#" class="resend-link" id="resendOtpLink">
+                        <i class="fas fa-redo"></i>
+                        <span>Resend verification code</span>
+                    </a>
+                </div>
+
+                <button type="submit" class="btn" id="verifyBtn" disabled>
+                    <i class="fas fa-check-circle"></i>
+                    Verify and Complete
+                </button>
+
+                <div class="error-message" id="errorMessage" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">Invalid verification code. Please try again.</span>
+                </div>
+
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Email verified successfully! Redirecting...</span>
+                </div>
+
+                <div class="back-link">
+                    <a href="register.html" id="backToRegisterLink">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to registration
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // OTP elements
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const resendOtpLink = document.getElementById('resendOtpLink');
+            const timerElement = document.getElementById('timer');
+            const timerText = document.getElementById('timerText');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const userEmailElement = document.getElementById('userEmail');
+            const backToRegisterLink = document.getElementById('backToRegisterLink');
+
+            // OTP configuration
+            let countdown;
+            let countdownTime = 300; // 5 minutes in seconds
+            let resendEnabled = false;
+            let userEmail = '';
+
+            // Get user email from URL parameters
+            function initVerification() {
+                const urlParams = new URLSearchParams(window.location.search);
+                userEmail = urlParams.get('email') || 'user@example.com';
+                userEmailElement.textContent = userEmail;
+                
+                startCountdown();
+            }
+
+            // Start the countdown timer
+            function startCountdown() {
+                clearInterval(countdown);
+                countdownTime = 300; // Reset to 5 minutes
+                updateTimerDisplay();
+                resendOtpLink.classList.add('disabled');
+                resendEnabled = false;
+                
+                countdown = setInterval(function() {
+                    countdownTime--;
+                    updateTimerDisplay();
+                    
+                    if (countdownTime <= 0) {
+                        clearInterval(countdown);
+                        timerElement.classList.add('expired');
+                        resendOtpLink.classList.remove('disabled');
+                        resendEnabled = true;
+                    }
+                }, 1000);
+            }
+
+            // Update the timer display
+            function updateTimerDisplay() {
+                const minutes = Math.floor(countdownTime / 60);
+                const seconds = countdownTime % 60;
+                timerText.textContent = `Code expires in ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // OTP input handling
+            otpInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = this.value;
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    // Only allow numbers
+                    if (!/^\d*$/.test(value)) {
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Move to next input if current input has value
+                    if (value && index < 5) {
+                        otpInputs[index + 1].focus();
+                    }
+                    
+                    // Update input styling
+                    if (value) {
+                        this.classList.add('filled');
+                    } else {
+                        this.classList.remove('filled');
+                    }
+                    
+                    // Check if all inputs are filled
+                    checkOTPCompletion();
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    // Move to previous input on backspace if current input is empty
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                    
+                    // Allow navigation with arrow keys
+                    if (e.key === 'ArrowLeft' && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                    
+                    if (e.key === 'ArrowRight' && index < 5) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').slice(0, 6);
+                    
+                    if (/^\d{6}$/.test(pasteData)) {
+                        // Fill all inputs with pasted data
+                        for (let i = 0; i < 6; i++) {
+                            otpInputs[i].value = pasteData[i];
+                            otpInputs[i].classList.add('filled');
+                        }
+                        checkOTPCompletion();
+                    }
+                });
+            });
+
+            // Check if OTP is complete
+            function checkOTPCompletion() {
+                let isComplete = true;
+                
+                otpInputs.forEach(input => {
+                    if (!input.value) {
+                        isComplete = false;
+                    }
+                });
+                
+                verifyBtn.disabled = !isComplete;
+                return isComplete;
+            }
+
+            
+            // Resend OTP
+            resendOtpLink.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                if (!resendEnabled) return;
+                
+                try {
+                    resendOtpLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'resend');
+                    formData.append('email', userEmail);
+                    
+                    const response = await fetch('verification.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Show the OTP code for testing (remove this in production)
+                        if (data.debug_code) {
+                            showSuccess('New code: ' + data.debug_code + ' (Check email or use this code)');
+                        } else {
+                            showSuccess('New verification code sent to your email!');
+                        }
+                        
+                        // Reset OTP inputs
+                        otpInputs.forEach(input => {
+                            input.value = '';
+                            input.classList.remove('filled');
+                        });
+                        
+                        verifyBtn.disabled = true;
+                        errorMessage.style.display = 'none';
+                        timerElement.classList.remove('expired');
+                        otpInputs[0].focus();
+                        startCountdown();
+                    } else {
+                        showError(data.message);
+                    }
+
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    showError('Network error. Please check your connection.');
+                } finally {
+                    resendOtpLink.innerHTML = '<i class="fas fa-redo"></i><span>Resend verification code</span>';
+                }
+            }); 
+
+            // Form submission
+            document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                let enteredOtp = '';
+                otpInputs.forEach(input => enteredOtp += input.value);
+                
+                if (enteredOtp.length !== 6) {
+                    showError('Please enter a complete 6-digit code');
+                    return;
+                }
+                
+                try {
+                    verifyBtn.disabled = true;
+                    verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'verify');
+                    formData.append('email', userEmail);
+                    formData.append('otp', enteredOtp);
+                    
+                    const response = await fetch('verification.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Server response:', data);
+                    
+                    if (data.success) {
+                        verifySuccess(data);
+                    } else {
+                        showError(data.message);
+                        verifyBtn.disabled = false;
+                        verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify and Complete';
+                    }
+                    
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    showError('Form submission failed. Please try again.');
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify and Complete';
+                }
+            });
+
+            // Handle successful verification
+            function verifySuccess(data) {
+                console.log('Verification successful, redirecting...');
+                
+                successMessage.style.display = 'flex';
+                errorMessage.style.display = 'none';
+                
+                verifyBtn.innerHTML = '<i class="fas fa-check"></i> Verified Successfully!';
+                verifyBtn.style.background = 'var(--success)';
+                verifyBtn.disabled = true;
+                
+                // Redirect to dashboard
+                setTimeout(function() {
+                    window.location.href = data.redirect || 'dashboard.php';
+                }, 1500);
+            }
+
+            // Show error message
+            function showError(message) {
+                errorMessage.style.display = 'flex';
+                document.getElementById('errorText').textContent = message;
+                successMessage.style.display = 'none';
+                
+                otpInputs.forEach(input => {
+                    input.style.animation = 'shake 0.5s';
+                    setTimeout(() => input.style.animation = '', 500);
+                });
+            }
+
+            // Show success message
+            function showSuccess(message) {
+                successMessage.style.display = 'flex';
+                errorMessage.style.display = 'none';
+                document.querySelector('.success-message span').textContent = message;
+                
+                setTimeout(() => successMessage.style.display = 'none', 3000);
+            }
+
+            // Back to registration link
+            backToRegisterLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to go back? Your verification progress will be lost.')) {
+                    window.location.href = 'register.html';
+                }
+            });
+
+            // Initialize the verification page
+            initVerification();
+        });
+    </script>
+</body>
+</html>
