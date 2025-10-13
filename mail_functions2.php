@@ -80,4 +80,5 @@ function createPasswordResetEmailTemplate($username, $otp) {
     </html>
     ";
 }
+
 ?>
