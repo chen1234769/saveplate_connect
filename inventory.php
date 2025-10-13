@@ -477,4 +477,5 @@ $username = $current_username;
 
     <script src="inventoryscript.js"></script>
 </body>
+
 </html>
