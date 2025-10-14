@@ -14,7 +14,7 @@ require_once 'mail_functions.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "saveplate";
+$dbname = "test"; 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -181,5 +181,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
-
 ?>
