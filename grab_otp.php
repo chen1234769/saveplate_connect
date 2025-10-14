@@ -19,7 +19,7 @@ function sendJsonResponse($success, $message) {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "saveplate";
+$dbname = "test"; 
 
 // Create connection
 try {
