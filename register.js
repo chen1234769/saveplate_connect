@@ -64,40 +64,71 @@ document.addEventListener('DOMContentLoaded', function() {
         this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     });
     
-    // Real-time validation
+    // Real-time validation that only shows errors when user enters invalid data
     usernameInput.addEventListener('input', function() {
         clearTimeout(usernameCheckTimeout);
         const username = this.value.trim();
         
-        if (username.length < 3) {
-            showError(usernameError, 'Username must be at least 3 characters');
-            usernameAvailable = false;
-            return;
+        if (username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9_]+$/.test(username)) {
+            // Only check availability, don't show errors
+            usernameCheckTimeout = setTimeout(() => {
+                checkUsernameAvailability(username);
+            }, 500);
+            // Hide error if valid
+            hideError(usernameError);
+        } else if (username.length > 0) {
+            // Only show validation errors if user has started typing
+            validateUsername();
+        } else {
+            // Hide error if field is empty
+            hideError(usernameError);
         }
-        
-        if (username.length > 20) {
-            showError(usernameError, 'Username must be less than 20 characters');
-            usernameAvailable = false;
-            return;
-        }
-        
-        if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-            showError(usernameError, 'Username can only contain letters, numbers, and underscores');
-            usernameAvailable = false;
-            return;
-        }
-        
-        // Simulate checking username availability
-        usernameCheckTimeout = setTimeout(() => {
-            checkUsernameAvailability(username);
-        }, 500);
     });
     
-    emailInput.addEventListener('blur', validateEmail);
-    phoneInput.addEventListener('blur', validatePhone);
-    passwordInput.addEventListener('input', validatePassword);
-    confirmPasswordInput.addEventListener('blur', validateConfirmPassword);
-    household_sizeSelect.addEventListener('change', validateHouseholdSize);
+    emailInput.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateEmail();
+        } else {
+            // Hide error if field is empty
+            hideError(emailError);
+        }
+    });
+    
+    phoneInput.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validatePhone();
+        } else {
+            // Hide error if field is empty
+            hideError(phoneError);
+        }
+    });
+    
+    passwordInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            validatePassword();
+        } else {
+            // Hide error if field is empty
+            hideError(passwordError);
+        }
+    });
+    
+    confirmPasswordInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            validateConfirmPassword();
+        } else {
+            // Hide error if field is empty
+            hideError(confirmPasswordError);
+        }
+    });
+    
+    household_sizeSelect.addEventListener('change', function() {
+        if (this.value !== '') {
+            validateHouseholdSize();
+        } else {
+            // Hide error if field is empty
+            hideError(household_sizeError);
+        }
+    });
     
     // Form submission
     form.addEventListener('submit', function(e) {
@@ -147,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
+        // Hide error if all validations pass
         hideError(usernameError);
         return true;
     }
@@ -165,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
+        // Hide error if validation passes
         hideError(emailError);
         return true;
     }
@@ -192,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
+        // Hide error if validation passes
         hideError(phoneError);
         return true;
     }
@@ -238,6 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePasswordStrength(strength, 'Strong');
         }
         
+        // Hide error if validation passes
         hideError(passwordError);
         return true;
     }
@@ -256,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
+        // Hide error if validation passes
         hideError(confirmPasswordError);
         return true;
     }
@@ -268,22 +304,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
+        // Hide error if validation passes
         hideError(household_sizeError);
         return true;
     }
     
     function checkUsernameAvailability(username) {
-        // In a real application, this would be an AJAX call to the server
-        // For demo purposes, we'll simulate a check with a timeout
         
         // Simulate taken usernames
         const takenUsernames = ['admin', 'user', 'test', 'demo', 'saveplate'];
         
         if (takenUsernames.includes(username.toLowerCase())) {
-            showError(usernameError, 'Username is not available. Please choose another one.');
             usernameAvailable = false;
         } else {
-            hideError(usernameError);
             usernameAvailable = true;
         }
     }
