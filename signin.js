@@ -16,13 +16,86 @@ document.addEventListener('DOMContentLoaded', function() {
         this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     });
 
-    // Real-time validation
-    usernameInput.addEventListener('blur', validateUsername);
-    passwordInput.addEventListener('blur', validatePassword);
+    // Form submission handling
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        // Clear any existing errors
+        hideError(formError);
+        hideError(usernameError);
+        hideError(passwordError);
+        
+        // Validate inputs
+        const isUsernameValid = validateUsername();
+        const isPasswordValid = validatePassword();
+        
+        if (isUsernameValid && isPasswordValid) {
+            // Show loading state
+            signinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            signinBtn.disabled = true;
+            
+            // Submit form
+            this.submit();
+        }
+    });
+
+    // Real-time validation that shows errors when user enters invalid data
+    usernameInput.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            validateUsername();
+        } else {
+            // Show error if field is empty
+            showError(usernameError, 'Please enter your valid username or email');
+        }
+    });
+    
+    passwordInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            validatePassword();
+        } else {
+            // Show error if field is empty
+            showError(passwordError, 'Please enter your valid password');
+        }
+    });
+
+    // Add blur event listeners for validation on field exit
+    usernameInput.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+            showError(usernameError, 'Please enter your valid username or email');
+        } else {
+            hideError(usernameError);
+        }
+    });
+    
+    passwordInput.addEventListener('blur', function() {
+        if (this.value === '') {
+            showError(passwordError, 'Please enter your valid password');
+        } else {
+            hideError(passwordError);
+        }
+    });
 
     // Form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Show validation for empty fields when user clicks Sign In
+        let hasErrors = false;
+        
+        if (usernameInput.value.trim() === '') {
+            showError(usernameError, 'Please enter your valid username or email');
+            hasErrors = true;
+        }
+        
+        if (passwordInput.value === '') {
+            showError(passwordError, 'Please enter your valid password');
+            hasErrors = true;
+        }
+        
+        // If there are empty fields, don't submit
+        if (hasErrors) {
+            return;
+        }
         
         const isUsernameValid = validateUsername();
         const isPasswordValid = validatePassword();
@@ -47,10 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = usernameInput.value.trim();
         
         if (username === '') {
-            showError(usernameError, 'Please enter your username or email');
+            showError(usernameError, 'Please enter your valid username or email');
             return false;
         }
         
+        // Hide error if validation passes
         hideError(usernameError);
         return true;
     }
@@ -59,10 +133,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = passwordInput.value;
         
         if (password === '') {
-            showError(passwordError, 'Please enter your password');
+            showError(passwordError, 'Please enter your valid password');
             return false;
         }
         
+        // Hide error if validation passes
         hideError(passwordError);
         return true;
     }
@@ -70,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function showError(element, message) {
         element.querySelector('span').textContent = message;
         element.style.display = 'flex';
-        hideError(formError);
     }
 
     function hideError(element) {
@@ -85,16 +159,47 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for error messages from PHP
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
+    console.log('URL params:', window.location.search);
+    console.log('Error param:', error);
+    
     if (error) {
+        console.log('Showing error:', decodeURIComponent(error));
         showError(formError, decodeURIComponent(error));
     }
+    
+    // Also check for common authentication error messages
+    const commonErrors = [
+        'Invalid username or password',
+        'Please verify your email before signing in',
+        'User not found',
+        'Authentication failed'
+    ];
+    
+    // Check if any common error messages are in the URL
+    commonErrors.forEach(errorMsg => {
+        if (window.location.href.includes(encodeURIComponent(errorMsg))) {
+            showError(formError, errorMsg);
+        }
+    });
 
     // Check for success messages
     const success = urlParams.get('success');
     if (success) {
         showSuccess();
         setTimeout(() => {
-            window.location.href = 'dashboard.html';
+            window.location.href = 'dashboard.php';
         }, 2000);
     }
+    
+    // Test function to manually show error (for debugging)
+    window.testError = function() {
+        showError(formError, 'Test error message');
+    };
+    
+    // Test function to check if elements exist
+    console.log('Form elements found:');
+    console.log('form:', form);
+    console.log('formError:', formError);
+    console.log('usernameError:', usernameError);
+    console.log('passwordError:', passwordError);
 });
