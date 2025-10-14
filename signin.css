@@ -1,0 +1,57 @@
+/* Sign in specific styles */
+.login-link {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.login-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    /*color: var(--text-light);*/
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    padding: 0 12px;
+}
+
+/* Button as link style */
+a.btn {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+/* Loading state */
+.btn:disabled {
+    background: #a5d6a7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Error and success messages */
+.error-message,
+.success-message {
+    margin-top: 15px;
+    text-align: center;
+}
