@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "saveplate";
+$dbname = "test"; 
 
 // Check required files
 if (!file_exists('mail_functions2.php')) {
