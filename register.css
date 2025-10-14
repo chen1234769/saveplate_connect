@@ -22,13 +22,21 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: linear-gradient(-45deg, #2c5465, #497c3b, #355c7d, #4caf50);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            color: var(--text);
+            color: #fff;
+        }
+
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
 
         .container {
@@ -38,36 +46,41 @@
 
         .logo-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
 
         .logo {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--primary);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
             margin-bottom: 15px;
-            box-shadow: var(--shadow);
         }
 
         .logo i {
-            font-size: 28px;
+            font-size: 10px;
+        }
+
+        .logo-img {
+            width: 400px;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
         }
 
         .logo-section h1 {
             font-size: 28px;
             font-weight: 700;
-            color: var(--primary);
+            color: #fff;
             margin-bottom: 5px;
         }
 
         .logo-section p {
-            color: var(--text-light);
-            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            margin: 0;
+            margin-top: -90px;
         }
 
         .card {
@@ -171,6 +184,7 @@
             line-height: 1.5;
             cursor: pointer;
             font-size: 14px;
+            color: #000000 !important;
         }
 
         .terms-section {
@@ -184,7 +198,7 @@
         .terms-section h3 {
             font-size: 16px;
             margin-bottom: 12px;
-            color: var(--text);
+            color: #000000;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -216,12 +230,14 @@
             margin: 16px 0;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: #000000;
         }
 
         .terms-note p {
             margin-bottom: 12px;
             font-size: 14px;
             line-height: 1.5;
+            color: #000000;
         }
 
         .terms-note p:last-child {
@@ -237,13 +253,14 @@
             margin-bottom: 8px;
             font-size: 14px;
             line-height: 1.5;
+            color: #000000;
         }
 
         .error-message {
             color: var(--error);
             font-size: 13px;
             margin-top: 6px;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 6px;
         }
@@ -456,5 +473,4 @@
                 left: 60px;
                 width: 40px;
             }
-
         }
