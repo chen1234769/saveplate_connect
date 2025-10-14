@@ -3,9 +3,9 @@ session_start();
 
 // Database configuration
 $servername = "localhost";
-$username = "root"; // Change to your database username
-$password = ""; // Change to your database password
-$dbname = "saveplate";
+$username = "root"; 
+$password = ""; 
+$dbname = "test";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Redirect to dashboard
-            header("Location: signin.html?success=true");
+            header("Location: dashboard.php?success=true");
             exit();
             
         } else {
@@ -78,4 +78,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
-
