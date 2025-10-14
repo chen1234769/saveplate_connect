@@ -5,9 +5,9 @@ require_once 'mail_functions.php';
 
 // Database configuration
 $servername = "localhost";
-$username = "root"; // Change to your database username
-$password = ""; // Change to your database password
-$dbname = "saveplate";
+$username = "root"; 
+$password = ""; 
+$dbname = "test"; 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
