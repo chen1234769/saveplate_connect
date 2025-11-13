@@ -27,70 +27,69 @@ body {
     width: 100%;
     max-width: 450px;
     padding: 20px;
-}
-
-.otp-card {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 40px 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    text-align: center;
-}
-
-.logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
 }
 
-.logo img {
-    width: 80px;
-    height: 80px;
+.logo-section {
+    margin-bottom: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-section img {
+    width: 400px;
+    height: 300px;
     object-fit: contain;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto 15px auto;
+    margin-bottom: 5px; /* reduced gap */
 }
 
-.logo i {
-    font-size: 2rem;
-    margin-right: 10px;
-    color: #fff;
-}
 
-.logo h1 {
+.logo-section h1 {
     font-size: 1.8rem;
     color: #fff;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.logo-section p {
+    color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            margin: 0;
+            margin-top: -90px;
+}
+
+.otp-card {
+    background: white;
+    border-radius: 15px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
 }
 
 h2 {
-    color: #fff;
     font-size: 1.8rem;
     margin-bottom: 10px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #666;
     margin-bottom: 10px;
     font-size: 0.95rem;
 }
 
 .user-email {
     font-weight: 600;
-    color: #fff;
+    color: #333;
 }
 
 .timer-text {
-    color: #ffeb3b;
+    color: #4caf50;
     font-weight: 600;
     margin-bottom: 30px;
-    font-size: 1rem;
 }
 
 .otp-inputs {
@@ -103,56 +102,41 @@ h2 {
 .otp-digit {
     width: 50px;
     height: 60px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid #e9ecef;
     border-radius: 10px;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: #f8f9fa;
+    color: #333;
     transition: all 0.3s ease;
 }
 
 .otp-digit:focus {
     border-color: #2ecc71;
-    background: rgba(46, 204, 113, 0.1);
+    background: white;
     outline: none;
     transform: translateY(-2px);
-}
-
-.otp-digit.filled {
-    border-color: #2ecc71;
-    background: rgba(46, 204, 113, 0.2);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
 }
 
 .submit-btn {
     width: 100%;
     padding: 14px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #2c5465;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
     margin-top: 20px;
 }
 
 .submit-btn:hover {
-    background: rgba(255, 255, 255, 1);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.submit-btn:disabled {
-    background: rgba(255, 255, 255, 0.5);
-    cursor: not-allowed;
-    transform: none;
 }
 
 .resend-otp {
@@ -160,7 +144,7 @@ h2 {
 }
 
 .resend-otp a {
-    color: #2ecc71;
+    color: #a5d6a7;
     text-decoration: none;
     font-weight: 600;
 }
@@ -171,10 +155,11 @@ h2 {
 
 .back-to-login {
     margin-top: 20px;
+    
 }
 
 .back-link {
-    color: rgba(255, 255, 255, 0.8);
+    color: #3b8b3f;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -183,7 +168,7 @@ h2 {
 }
 
 .back-link:hover {
-    color: #fff;
+    color: #333;
 }
 
 .message {
@@ -204,39 +189,4 @@ h2 {
     background: rgba(231, 76, 60, 0.2);
     border: 1px solid rgba(231, 76, 60, 0.3);
     color: #e74c3c;
-}
-
-.error-message {
-    color: #ff6b6b;
-    font-size: 0.85rem;
-    margin-top: 5px;
-    display: block;
-    min-height: 20px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.spinner {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-}
-
-.spinner div {
-    width: 8px;
-    height: 8px;
-    background-color: #2c5465;
-    border-radius: 100%;
-    display: inline-block;
-    animation: bounce 1.4s infinite ease-in-out both;
-}
-
-.spinner .bounce1 { animation-delay: -0.32s; }
-.spinner .bounce2 { animation-delay: -0.16s; }
-
-@keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1.0); }
 }
