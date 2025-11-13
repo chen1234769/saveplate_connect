@@ -10,38 +10,29 @@
 <body>
     <div class="container">
         <div class="logo-section">
-            <div class="logo">
-                <img src="small_logo.png" alt="SavePlate Connect Logo" class="logo-img">
-            </div>
-            <h1>SavePlate Connect</h1>
+            <img src="Logo.png" alt="SavePlate Connect Logo">
+            <h1></h1>
             <p>Smart Food Waste Reduction Platform</p>
         </div>
-            
+        
+        <div class="otp-card">
             <h2>Enter Verification Code</h2>
             <p class="subtitle">We sent a 6-digit code to <span id="userEmail" class="user-email">your email</span></p>
             <p class="timer-text">Expires in <span id="timer">05:00</span></p>
             
             <form id="otpForm" class="otp-form">
-                <div class="form-group">
-                    <div class="otp-inputs">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="1">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="2">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="3">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="4">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="5">
-                        <input type="text" class="otp-digit" maxlength="1" data-index="6">
-                    </div>
-                    <input type="hidden" id="otp" name="otp">
-                    <span class="error-message" id="otpError"></span>
+                <div class="otp-inputs">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="1">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="2">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="3">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="4">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="5">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="6">
                 </div>
+                <input type="hidden" id="otp" name="otp">
                 
                 <button type="submit" class="submit-btn" id="verifyBtn">
-                    <span class="btn-text">Verify Code</span>
-                    <div class="spinner hidden" id="verifySpinner">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
-                    </div>
+                    Verify Code
                 </button>
             </form>
 
@@ -55,7 +46,7 @@
                     Back to Sign In
                 </a>
             </div>
-            
+
             <div id="message" class="message hidden"></div>
         </div>
     </div>
